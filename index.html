@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Bluetooth Rocks! — Gyro</title>
+
+		<link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="common.css">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<script type="text/javascript" src="lib/bluetooth-thingy.js"></script>
+		<script type="text/javascript" src="lib/three.min.js"></script>
+		<script type="text/javascript" src="lib/GLTFLoader.js"></script>
+		<script type="text/javascript" src="lib/promise-queue.js"></script>
+		<script type="text/javascript" src="lib/bluetooth.js"></script>
+		<script type="text/javascript" src="lib/sbrick.js"></script>
+	</head>
+	
+	<body class='calibrate'>
+		<div class='content'>
+			<canvas id='graph'></canvas>
+		
+			<div id='renderer'></div>
+			
+			<div id='directions'>
+				<div id='forward'>
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1">
+					<path style=" " d="M 25 1.015625 L 14.308594 11.28125 C 14.046875 11.527344 13.9375 11.894531 14.023438 12.242188 C 14.109375 12.589844 14.375 12.867188 14.71875 12.964844 C 15.066406 13.066406 15.4375 12.972656 15.691406 12.71875 L 24 4.746094 L 24 48 C 23.996094 48.359375 24.183594 48.695313 24.496094 48.878906 C 24.808594 49.058594 25.191406 49.058594 25.503906 48.878906 C 25.816406 48.695313 26.003906 48.359375 26 48 L 26 4.746094 L 34.308594 12.71875 C 34.5625 12.972656 34.933594 13.066406 35.28125 12.964844 C 35.625 12.867188 35.890625 12.589844 35.976563 12.242188 C 36.0625 11.894531 35.953125 11.527344 35.691406 11.28125 Z "/>
+					</svg>
+				</div>
+				
+				<div id='reverse'>
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1">
+					<path style=" " d="M 24.984375 0.984375 C 24.433594 0.996094 23.992188 1.449219 24 2 L 24 45.253906 L 15.691406 37.28125 C 15.5 37.089844 15.238281 36.984375 14.96875 36.988281 C 14.5625 37 14.199219 37.253906 14.054688 37.632813 C 13.910156 38.011719 14.007813 38.441406 14.308594 38.71875 L 25 48.984375 L 35.691406 38.71875 C 35.953125 38.472656 36.0625 38.105469 35.976563 37.757813 C 35.890625 37.410156 35.625 37.132813 35.28125 37.035156 C 34.933594 36.933594 34.5625 37.027344 34.308594 37.28125 L 26 45.253906 L 26 2 C 26.003906 1.730469 25.898438 1.46875 25.707031 1.277344 C 25.515625 1.085938 25.253906 0.980469 24.984375 0.984375 Z "/>
+					</svg>
+					
+				</div>
+				
+				<div id='left'>
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1">
+					<path style=" " d="M 11.957031 13.988281 C 11.699219 14.003906 11.457031 14.117188 11.28125 14.308594 L 1.015625 25 L 11.28125 35.691406 C 11.527344 35.953125 11.894531 36.0625 12.242188 35.976563 C 12.589844 35.890625 12.867188 35.625 12.964844 35.28125 C 13.066406 34.933594 12.972656 34.5625 12.71875 34.308594 L 4.746094 26 L 48 26 C 48.359375 26.003906 48.695313 25.816406 48.878906 25.503906 C 49.058594 25.191406 49.058594 24.808594 48.878906 24.496094 C 48.695313 24.183594 48.359375 23.996094 48 24 L 4.746094 24 L 12.71875 15.691406 C 13.011719 15.398438 13.09375 14.957031 12.921875 14.582031 C 12.753906 14.203125 12.371094 13.96875 11.957031 13.988281 Z "/>
+					</svg>
+				</div>
+				
+				<div id='right'>
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1">
+					<path style=" " d="M 38.035156 13.988281 C 37.628906 13.980469 37.257813 14.222656 37.09375 14.59375 C 36.933594 14.96875 37.015625 15.402344 37.300781 15.691406 L 45.277344 24 L 2.023438 24 C 1.664063 23.996094 1.328125 24.183594 1.148438 24.496094 C 0.964844 24.808594 0.964844 25.191406 1.148438 25.503906 C 1.328125 25.816406 1.664063 26.003906 2.023438 26 L 45.277344 26 L 37.300781 34.308594 C 36.917969 34.707031 36.933594 35.339844 37.332031 35.722656 C 37.730469 36.105469 38.363281 36.09375 38.746094 35.691406 L 49.011719 25 L 38.746094 14.308594 C 38.5625 14.109375 38.304688 13.996094 38.035156 13.988281 Z "/>
+					</svg>
+				</div>
+			</div>
+		</div>
+		
+		<div class='connect'>
+			<h1>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 136"><path d="M55.48,33.58,66.69,44.82,55.49,56.06V33.58Zm0,68.83L66.69,91.17,55.49,79.93v22.48ZM43.51,68,19.28,43.63l7-7.05L45.61,56V9.53l35.1,35.21L57.53,68,80.72,91.25,45.61,126.47V80L26.3,99.42l-7-7L43.51,68ZM50,136c29.6,0,50-14.11,50-68S79.6,0,50,0,0,14.11,0,68s20.4,68,50,68Z"/></svg>
+				Gyro<em>!</em>
+			</h1>
+			<p>
+				To use this demo you need a Nordic Thingy:52.
+			</p>
+
+			<button id='connect'>Connect</button>
+		</div>
+
+		<div class='settings'>
+			<div class='pills'>
+				<button id='calibrate'>Calibrate</button>
+				<button id='control'>Control</button>
+			</div>
+		
+			<div class='views'>
+				<div id='calibrateView'>
+					<input id='orientation' type='range' min='0' max='359' value='0' step='1'>
+				</div>
+			
+				<div id='controlView'>
+					<button id='secondary'>Connect to a Lego Racer</button>
+				</div>
+			</div>			
+		</div>
+
+		<script type="text/javascript" src="index.js"></script>
+	</body>
+</html>

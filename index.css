@@ -1,0 +1,328 @@
+
+/* Basic layout */
+
+:root {
+	--settings-height: 20vh;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
+}
+
+body {
+	background: #444;
+	text-align: center;
+}
+
+button {
+	color: #888;
+	background: none;
+	border: .3vh solid #888;
+	border-radius: 1vh;
+	outline: none;
+	cursor: pointer;
+}
+
+
+
+
+/* Content */
+
+.content {
+	opacity: 0.3;
+	transition: opacity .5s, fill .5s;
+}
+
+body.connected .content {
+	opacity: 1;
+}
+
+
+
+
+/* Head */
+
+.content {
+	position: absolute;
+	top: 0;
+	width: 100vw;
+	height: calc(100vh - var(--settings-height));
+}
+.content #graph {
+	position: absolute;
+	top: 25%;
+	left: 0;
+	height: 50%;
+	width: 100%;
+}
+.content #renderer {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+}
+
+
+
+
+/* Directions */
+
+@keyframes direction-forward {
+	0% {
+		opacity: 1;
+		transform: perspective(200px) rotateX(50deg) scale(0.8) translateY(40px);
+	}
+	
+	100% {
+		opacity: 0;
+		transform: perspective(200px) rotateX(50deg) scale(0.8) translateY(-40px);
+	}
+}
+
+@keyframes direction-reverse {
+	0% {
+		opacity: 1;
+		transform: perspective(200px) rotateX(50deg) scale(0.8) translateY(-40px);
+	}
+	
+	100% {
+		opacity: 0;
+		transform: perspective(200px) rotateX(50deg) scale(0.8) translateY(40px);
+	}
+}
+@keyframes direction-right {
+	0% {
+		opacity: 1;
+		transform: perspective(200px) rotateX(50deg) scale(0.8) translateX(-40px);
+	}
+	
+	100% {
+		opacity: 0;
+		transform: perspective(200px) rotateX(50deg) scale(0.8) translateX(40px);
+	}
+}
+@keyframes direction-left {
+	0% {
+		opacity: 1;
+		transform: perspective(200px) rotateX(50deg) scale(0.8) translateX(40px);
+	}
+	
+	100% {
+		opacity: 0;
+		transform: perspective(200px) rotateX(50deg) scale(0.8) translateX(-40px);
+	}
+}
+
+
+#directions {
+	position: absolute;
+	top: 70vh;
+	z-index: 1;
+}
+#directions > div {
+	display: none;
+	
+	position: absolute;
+	left: 50vw;
+	margin-left: -10vh;
+	
+	width: 20vh;
+	height: 20vh;
+	background: rgba(0,0,0,0.3);
+	border-radius: 3vh;
+	padding: 3vh 2vh 1vh;
+}
+#directions > div svg {
+	width: 20vh;
+	height: 20vh;
+	fill: #ffffff;
+	
+}
+/* 
+.direction-forward #forward {
+	display: block;
+	animation: direction-forward 1s;
+	animation-fill-mode: forwards;
+}
+.direction-reverse #reverse {
+	display: block;
+	animation: direction-reverse 1s;
+	animation-fill-mode: forwards;
+}
+.direction-left #left {
+	display: block;
+	animation: direction-left 1s;
+	animation-fill-mode: forwards;
+}
+.direction-right #right {
+	display: block;
+	animation: direction-right 1s;
+	animation-fill-mode: forwards;
+} */
+
+
+.sbrick-connected.direction-forward #forward {
+	display: block;
+	animation: direction-forward 1s;
+	animation-fill-mode: forwards;
+}
+.sbrick-connected.direction-reverse #reverse {
+	display: block;
+	animation: direction-reverse 1s;
+	animation-fill-mode: forwards;
+}
+.sbrick-connected.direction-left #left {
+	display: block;
+	animation: direction-left 1s;
+	animation-fill-mode: forwards;
+}
+.sbrick-connected.direction-right #right {
+	display: block;
+	animation: direction-right 1s;
+	animation-fill-mode: forwards;
+}
+
+
+
+
+/* Settings */
+
+.settings {
+	position: absolute;
+	top: calc(100vh - var(--settings-height));
+	width: 100%;
+	min-height: var(--settings-height);
+	background: #333;
+
+	transition: opacity .3s ease-in-out;
+	opacity: 0.3;
+	pointer-events: none;
+}
+body.connected .settings {
+	opacity: 1;
+	pointer-events: auto;
+}
+body.sbrick-connected .settings {
+	opacity: 0.1;
+}
+body.sbrick-connected .settings:hover {
+	opacity: 1;
+}
+
+/* Pills */
+
+.pills {
+	margin-top: -2.4vh;
+	margin-bottom: 0;
+	display: flex;
+}
+.pills button {
+	margin: 0;
+	padding: 1vh 2vh;
+	border-radius: 0;
+	border-left: none;
+	font-size: 2vh;
+	background: #333;
+}
+.pills button:first-of-type {
+	border-left: .3vh solid #888;
+	border-top-left-radius: 1vh;
+	border-bottom-left-radius: 1vh;
+	margin-left: auto;
+}
+.pills button:last-of-type {
+	border-top-right-radius: 1vh;
+	border-bottom-right-radius: 1vh;
+	margin-right: auto;
+}
+
+body.calibrate button#calibrate,
+body.control button#control {
+	background: #888;
+	color: #fff;
+}
+
+
+
+
+
+/* Views */
+
+.views {
+	padding: 6vh 0;
+	min-height: 6vh;
+	display: block;
+}
+.views > div {
+	display: none;
+}
+
+body.calibrate div#calibrateView,
+body.control div#controlView {
+	display: block;
+}
+
+
+
+/* Calibrate */
+
+input[type=range] {
+	-webkit-appearance: none;
+	width: 50vw;
+	background: transparent; 
+}
+
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+}
+
+input[type=range]:focus {
+	outline: none; 
+}
+
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+
+	background: #444;
+	border: .3vh solid #888;
+	border-radius: 1vh;
+	height: 6vh;
+	width: 3vh;
+	cursor: pointer;
+
+	margin-top: -3vh; 
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: .3vh;
+	cursor: pointer;
+	background: #888;
+	border-radius: .3vh;
+	border: 10px solid #333;
+	box-sizing: content-box;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+	background: #367ebd;
+}
+
+
+button#secondary {
+	margin: 1vh 0 1.5vh;
+	padding: 1vh 2vh;
+	font-size: 2vh;
+}
+body.sbrick-connected button#secondary {
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+
+
+
